@@ -1,6 +1,6 @@
 import random
 
-class rover_individual(object):
+class Rover_individual:
     def __init__(self, chromosome):
         self.chrmosome = chromosome
         self.fitness = self.cal_fitness() 
