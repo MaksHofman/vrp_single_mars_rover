@@ -1,6 +1,6 @@
 import random
 
-class Rover_individual:
+class Rover_individual: # TO WSZYSTKO TRZEBA ZREWORKOWAC
     def __init__(self, chromosome):
         self.chrmosome = chromosome
         self.fitness = self.cal_fitness() 

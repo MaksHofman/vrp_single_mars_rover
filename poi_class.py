@@ -1,4 +1,6 @@
-class Time:
+from math import sqrt
+class Time: #imo usless mozna zwykly time policzyc
+
     sol = 36 #trzeba sprawdzic czy rell
 
     def __init__(self, day, hours, minuts):
@@ -19,7 +21,7 @@ class Time:
     def hours_to_mars_days(self, hours):
         if hours >= Time.sol:
             self.day += 1
-            self.hour -= sol
+            self.hour -= Time.sol
     
 
 class Position:
@@ -35,4 +37,4 @@ class Poi:
     
     @classmethod
     def check_distance_to_node(self, rover_position):
-        pass #tu trzeba rozkminic to matematycznie
+        return sqrt((self.position.x - rover_position.x) ** 2 + (self.position.y - rover_position.y) ** 2)
