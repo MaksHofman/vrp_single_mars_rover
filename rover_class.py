@@ -1,38 +1,22 @@
 import random
 
 class Rover_individual: # TO WSZYSTKO TRZEBA ZREWORKOWAC
-    def __init__(self, chromosome):
+    def __init__(self, chromosome): 
         self.chrmosome = chromosome
         self.fitness = self.cal_fitness() 
   
     @classmethod
-    def mutated_genes(self): 
-        global GENES 
-        gene = random.choice(GENES) 
-        return gene 
+    def mutated_genes(self): #moze szanas na mutacjie 0.1? tez jak mate trzeba zobaczyc jak najlepiej
+        pass
   
     @classmethod
-    def create_gnome(self): 
-        global TARGET 
-        gnome_len = len(TARGET) 
-        return [self.mutated_genes() for _ in range(gnome_len)] 
+    def create_gnome(self):  #geny to beda randomowe poie
+        pass
   
-    def mate(self, par2): 
-        # chromosome for offspring 
-        child_chromosome = [] 
-        for gp1, gp2 in zip(self.chromosome, par2.chromosome):     
-            prob = random.random() 
-            if prob < 0.45: 
-                child_chromosome.append(gp1) 
-            elif prob < 0.90: 
-                child_chromosome.append(gp2) 
-            else: 
-                child_chromosome.append(self.mutated_genes()) 
-        return rover_individual(child_chromosome) 
+    def mate(self, par2): # chyba normalne przetasownie %3 chyba(do ustawienia)
+        pass
   
-    def cal_fitness(self): 
-        global TARGET 
-        fitness = 0
-        for gs, gt in zip(self.chromosome, TARGET): 
-            if gs != gt: fitness+= 1
-        return fitness
+    def cal_fitness(self): # zrobienie wszystkich taskow lub jak przez kilka generacji nic sie nie dzieje to max ilosc
+        pass
+
+    # trzeba tez zrobic cala logike obliczania odleglosci i dodawnia czasu po przejsciu drogi (chyba to w cal fitnes trzeba)
