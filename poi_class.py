@@ -1,40 +1,40 @@
 from math import sqrt
-class Time: #imo usless mozna zwykly time policzyc
-
-    sol = 36 #trzeba sprawdzic czy rell
-
-    def __init__(self, day, hours, minuts):
-        self.day = day
-        self.hour = hours
-        self.minuts = minuts
-    
-    def __init__(self, hours, minuts):
-        self.day = 0
-        self.hour = hours
-        self.minuts = minuts
-
-    def __init__(self, minuts):
-        self.day = 0
-        self.hour = 0
-        self.minuts = minuts
-
-    def hours_to_mars_days(self, hours):
-        if hours >= Time.sol:
-            self.day += 1
-            self.hour -= Time.sol
-    
+import random
+import datetime
 
 class Position:
     def __init__(self, x_position, y_position):
         self.x = x_position
         self.y = y_position
+    def __str__(self):
+        return f"X: {self.x}, Y: {self.y}"
+
+
+def random_datetime_gen(hour_max: int,min_max: int) -> datetime.time:
+    return datetime.time(random.randint(0, hour_max), random.randint(0, min_max))
+
+def random_position_gen(x_max:int , y_max: int) -> Position:
+    return Position(random.randint(0, x_max), random.randint(0, y_max))
 
 class Poi:
-    def __init__(self, time_of_task: Time, position: Position, priority_level: int):
+    def __init__(self, poi_number: int, time_of_task: datetime.time, position: Position, priority_level: int):
+        self.poi_number = poi_number
         self.time_of_task = time_of_task
         self.position = position
         self.priority_level = priority_level
     
+    def __str__(self):
+        return f"Poi nr: {self.poi_number} czas: {self.time_of_task}, position: {self.position}, priority: {self.priority_level}"
+
     @classmethod
     def check_distance_to_node(self, rover_position):
         return sqrt((self.position.x - rover_position.x) ** 2 + (self.position.y - rover_position.y) ** 2)
+    
+    @classmethod
+    def gen_random_list_of_pois(cls, amount :int, max_time_for_task_hour:int, max_x:int, max_y:int, max_priority: int) -> list:
+        output = []
+        for i in range(amount):
+            output.append(Poi(i,random_datetime_gen(max_time_for_task_hour,60), random_position_gen(max_x, max_y), random.randint(1, max_priority)))
+        return output
+    
+    
