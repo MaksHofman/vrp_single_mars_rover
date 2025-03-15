@@ -3,41 +3,45 @@ from rover_class import *
 
 GENES = []
 
-Best_time = 360000
+
 
 def main():
     print("start")
-    Amout_of_pois = 3
-    POPULATION_SIZE = 100
+    Amout_of_pois = 50
+    POPULATION_SIZE = 1000
     Max_time_for_task_in_poi = 3
     Max_X_bound = 10
     Max_Y_bound = 10
     Max_piority = 5
     global GENES
     GENES = Poi.gen_random_list_of_pois(Amout_of_pois, Max_time_for_task_in_poi, Max_X_bound, Max_Y_bound, Max_piority)
-    global Best_time
-    Last_best_time = 0
-    loop_after_peak = 100000
+    Last_best_fitness = 0
+    og_loop_counter = 100
+    loop_after_peak = og_loop_counter
     generation = 1
     found = False
     population = [] 
+    best_fitness = 0
 
     for _ in range(POPULATION_SIZE): 
                 gnome = Rover_individual.create_gnome(GENES) 
-                population.append(Rover_individual(Position(0,0), gnome, Best_time, GENES)) 
+                population.append(Rover_individual(Position(0,0), gnome, GENES)) 
   
     while not loop_after_peak == 0: 
-        population = sorted(population, key = lambda x:x.fitness) 
+        population = sorted(population, key=lambda x: x.fitness, reverse=True)
   
-        if population[0].fitness < Best_time:  #to tzeba przerobic zeby sprawdzalo czy jest progres
-            Last_best_time = Best_time
-            Best_time = population[0].time
+        if population[0].fitness >= best_fitness:  
+            Last_best_fitness = best_fitness
+            best_fitness = population[0].fitness
 
-        if Last_best_time != Best_time and found == True:
+        if Last_best_fitness != best_fitness and found == True:
              found = False
-             loop_after_peak = 10
+             loop_after_peak = og_loop_counter
 
-        if Last_best_time == Best_time and found != True:
+        if Last_best_fitness == best_fitness and found == True:
+             loop_after_peak -= 1
+
+        if Last_best_fitness == best_fitness and found != True:
             found = True
             loop_after_peak -= 1
   
@@ -50,14 +54,15 @@ def main():
         for _ in range(s): 
             parent1 = random.choice(population[:50]) 
             parent2 = random.choice(population[:50]) 
-            child = parent1.mate(parent2, Best_time) 
+            child = parent1.mate(parent2) 
             new_generation.append(child) 
-  
+
+        
         population = new_generation 
   
         #print(f"Generation: {generation} String: {population[0].chromosome} Fitness: {population[0].fitness}") # trzeba to na wizualizacje zmienic
-        print(f"Best time{Best_time}, Last Time = {Last_best_time}, Geratiuon {generation}")
-        loop_after_peak -= 1
+        print(f"Best time{best_fitness}, Last Time = {Last_best_fitness}, Geratiuon {generation}")
+      
         generation += 1
 
       
