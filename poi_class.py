@@ -8,6 +8,10 @@ class Position:
         self.y = y_position
     def __str__(self):
         return f"X: {self.x}, Y: {self.y}"
+    
+    @classmethod
+    def check_distance(cls, start_point, end_point):
+        return sqrt((start_point.position.x - end_point.x) ** 2 + (start_point.position.y - end_point.y) ** 2)
 
 
 def random_datetime_gen(hour_max: int,min_max: int) -> datetime.time:
@@ -26,9 +30,6 @@ class Poi:
     def __str__(self):
         return f"Poi nr: {self.poi_number} czas: {self.time_of_task}, position: {self.position}, priority: {self.priority_level}"
 
-    @classmethod
-    def check_distance_to_node(self, rover_position):
-        return sqrt((self.position.x - rover_position.x) ** 2 + (self.position.y - rover_position.y) ** 2)
     
     @classmethod
     def gen_random_list_of_pois(cls, amount :int, max_time_for_task_hour:int, max_x:int, max_y:int, max_priority: int) -> list:
